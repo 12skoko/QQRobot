@@ -21,11 +21,13 @@ if __name__ == '__main__':
 
         if not (req.json()['msg'] == '' and req.json()['data'] == []):
             interval.update()
-            print(req.json()['data'][0])
+            print('receive:'+str(req.json()['data'][0]))
             try:
                 processMsg(req.json()['data'][0])
-            except:
+            except Exception as e :
+                print(e)
                 print('处理错误')
-                sandMsg('申请失败', 1458987208, 'FriendMessage', key)
+                sandMsg(str(req.json()), 1458987208, 'FriendMessage', key)
+                sandMsg(str(e), 1458987208, 'FriendMessage', key)
 
         time.sleep(interval.getIntervalTime())

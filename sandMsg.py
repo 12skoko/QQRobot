@@ -11,7 +11,7 @@ def sandMsg(text,target,type,key,display=1):
         ]
     }
     if display!=0:
-        print(data)
+        print('sand:'+str(data))
     rep = requests.post(url='http://127.0.0.1:8080/send'+type, json=data)
     assert rep.json()['code'] == 0 and rep.json()['msg'] == 'success'
     del rep

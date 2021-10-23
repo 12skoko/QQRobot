@@ -17,7 +17,7 @@ if __name__ == '__main__':
     key = getSessionKey.SessionKey()
     se = requests.session()
     while (1):
-        req = se.get('http://127.0.0.1:8080/fetchMessage?sessionKey=' + key.getSessionKey() + '&count=1')
+        req = se.get(key.posturl+'/fetchMessage?sessionKey=' + key.getSessionKey() + '&count=1')
 
         if not (req.json()['msg'] == '' and req.json()['data'] == []):
             interval.update()
@@ -27,7 +27,7 @@ if __name__ == '__main__':
             except Exception as e :
                 print(e)
                 print('处理错误')
-                sandMsg(str(req.json()), 1458987208, 'FriendMessage', key)
-                sandMsg(str(e), 1458987208, 'FriendMessage', key)
+                sandMsg(str(req.json()), key.admin, 'FriendMessage', key)
+                sandMsg(str(e), key.admin, 'FriendMessage', key)
 
         time.sleep(interval.getIntervalTime())

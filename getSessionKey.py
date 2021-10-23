@@ -7,9 +7,10 @@ class SessionKey():
     def __init__(self):
         with open('config.yaml', encoding='utf-8') as f:
             data = yaml.load(f, Loader=yaml.SafeLoader)
-            self._posturl = data['posturl']
+            self.posturl = data['posturl']
             self._verifyKey = data['verifyKey']
             self._robotQQ = data['robotQQ']
+            self.admin=data['admin']
         self._Timestamp = int(time.time())
         self._sessionKey = self._initSessionKey()
 
@@ -18,7 +19,7 @@ class SessionKey():
 
         data = {"verifyKey": self._verifyKey}
 
-        rep = se.post(url=self._posturl + '/verify', json=data)
+        rep = se.post(url=self.posturl + '/verify', json=data)
 
         redict = rep.json()
 
@@ -29,7 +30,7 @@ class SessionKey():
             "qq": self._robotQQ
         }
 
-        rep = se.post(url=self._posturl + '/bind', json=data)
+        rep = se.post(url=self.posturl + '/bind', json=data)
 
         assert rep.json()['code'] == 0 and rep.json()['msg'] == 'success'
 
@@ -43,7 +44,7 @@ class SessionKey():
             "sessionKey": self._sessionKey,
             "qq": self._robotQQ
         }
-        rep = requests.post(url=self._posturl + '/bind', json=data)
+        rep = requests.post(url=self.posturl + '/bind', json=data)
         if rep.json()['code'] == 0 and rep.json()['msg'] == 'success':
             del rep
             return 0
